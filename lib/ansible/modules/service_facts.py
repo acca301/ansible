@@ -211,7 +211,7 @@ class ServiceScanService(BaseService):
 
     def _list_openrc(self, services):
         all_services_runlevels = {}
-        rc, stdout, stderr = self.module.run_command("%s -a -s -m 2>&1 | grep '^ ' | tr -d '[]'" % self.rc_status_path, use_unsafe_shell=True)
+        rc, stdout, stderr = self.module.run_command("%s -a -s -m 2>&1 | grep '^ ' | grep -v '*' | tr -d '[]'" % self.rc_status_path, use_unsafe_shell=True)
         rc_u, stdout_u, stderr_u = self.module.run_command("%s show -v 2>&1 | grep '|'" % self.rc_update_path, use_unsafe_shell=True)
         for line in stdout_u.split('\n'):
             line_data = line.split('|')
